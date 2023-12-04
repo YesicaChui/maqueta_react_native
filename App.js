@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { StyleSheet, Text, View, TextInput, Button, Image } from "react-native"
+import { StyleSheet, Text, View, TextInput, Button, Image, FlatList, Modal } from "react-native"
 import uuid from 'react-native-uuid';
 //import { styles } from "./styleApp"
 const App = () => {
@@ -7,17 +7,30 @@ const App = () => {
   const [newTitleProduct, setNewTitleProduct] = useState("")
   const [newPriceProduct, setNewPriceProduct] = useState("")
   const [products, setProducts] = useState([])
-  const handlerAddProduct = ()=> {
-    const newProduct ={
-      id:uuid.v4(),
-      title:newTitleProduct, 
-      price:newPriceProduct
-    } 
-   setProducts(c=>[...c,newProduct])
-   setNewTitleProduct("")
-   setNewPriceProduct("")
-   console.log(products)
-  } 
+  const [productSelected, setProductSelected] = useState({})
+  const [isVisible, setIsVisible] = useState(false)
+
+  const handlerDeleteModal = (item)=>{
+    console.log(item)
+    setIsVisible(true)
+    setProductSelected(item)
+  }
+
+  const handlerDeleteProduct = ()=>{
+    console.log("vamos a borrar")
+    setProducts(products.filter(elemento => elemento.id != productSelected.id))
+    setIsVisible(false)
+  }
+  const handlerAddProduct = () => {
+    const newProduct = {
+      id: uuid.v4(),
+      title: newTitleProduct,
+      price: newPriceProduct
+    }
+    setProducts(c => [...c, newProduct])
+    setNewTitleProduct("")
+    setNewPriceProduct("")
+  }
   return (
     <View style={styles.container}>
       <View style={styles.inputContainer}>
@@ -26,19 +39,32 @@ const App = () => {
           onChangeText={(texto) => setNewTitleProduct(texto)} value={newTitleProduct} />
 
         <TextInput placeholder="Precio" style={styles.input}
-          onChangeText={(texto) => setNewPriceProduct(texto)}  value={newPriceProduct}/>
+          onChangeText={(texto) => setNewPriceProduct(texto)} value={newPriceProduct} />
 
-        <Button title="ADD" onPress={() => handlerAddProduct()} ></Button>
+        <Button title="ADD" onPress={handlerAddProduct} ></Button>
 
       </View>
-      
+
       <View style={styles.listContainer}>
-        <View style={styles.cardProduct}>
-          <Text style={styles.cardTitle}>Coca Cola</Text>
-          <Text>S/.200</Text>
-          <Button title="DEL" />
-        </View>
+        <FlatList
+          data={products}
+          keyExtractor={elemento => elemento.id}
+          renderItem={({ item }) =>
+            <View style={styles.cardProduct}>
+              <Text style={styles.cardTitle}>{item.title}</Text>
+              <Text>S/.{item.price}</Text>
+              <Button title="DEL" onPress={()=>handlerDeleteModal(item)}/>
+            </View>}
+        />
       </View>
+      <Modal
+        visible={isVisible}
+      >
+        <Text >Desea Borrar</Text>
+        <Button title="si" onPress={()=>handlerDeleteProduct()}/>
+        <Button title="No" onPress={()=>setIsVisible(false)}/>
+      </Modal>
+
     </View>
   )
 }
