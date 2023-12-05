@@ -2,6 +2,7 @@ import { useState } from "react"
 import { StyleSheet, Text, View, TextInput, Button, Image, FlatList, Modal } from "react-native"
 import uuid from 'react-native-uuid';
 import ModalDelete from "./src/components/ModalDelete";
+import AddProduct from "./src/components/AddProduct";
 //import { styles } from "./styleApp"
 const App = () => {
 
@@ -34,18 +35,13 @@ const App = () => {
   }
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-
-        <TextInput placeholder="Nombre" style={styles.input}
-          onChangeText={(texto) => setNewTitleProduct(texto)} value={newTitleProduct} />
-
-        <TextInput placeholder="Precio" style={styles.input}
-          onChangeText={(texto) => setNewPriceProduct(texto)} value={newPriceProduct} />
-
-        <Button title="ADD" onPress={handlerAddProduct} ></Button>
-
-      </View>
-
+      <AddProduct 
+      setNewTitleProduct = {setNewTitleProduct}
+      newTitleProduct = {newTitleProduct}
+      setNewPriceProduct = {setNewPriceProduct}
+      newPriceProduct = {newPriceProduct}
+      handlerAddProduct = {handlerAddProduct}
+      />
       <View style={styles.listContainer}>
         <FlatList
           data={products}
@@ -58,7 +54,13 @@ const App = () => {
             </View>}
         />
       </View>
-      <ModalDelete productSelected = {productSelected} isVisible = {isVisible}  handlerDeleteProduct = {handlerDeleteProduct} setIsVisible = {setIsVisible}/>
+      <ModalDelete 
+        producto = {productSelected} 
+        isVisible = {isVisible}  
+        handlerDeleteProduct = {handlerDeleteProduct} 
+        setIsVisible = {setIsVisible}
+      />
+
 
     </View>
   )
@@ -71,18 +73,7 @@ const styles = StyleSheet.create(
       alignItems: "center",
       marginTop: 80,
     },
-    inputContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      alignSelf: "stretch",
-      justifyContent: "space-around"
-    },
-    input: {
-      borderWidth: 4,
-      paddingHorizontal: 10,
-      paddingVertical: 5,
-      width: 150
-    },
+    
     listContainer: {
       width: "100%"
     },

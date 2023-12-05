@@ -1,6 +1,7 @@
 import { View, Modal, Text, Button, StyleSheet } from 'react-native'
 
-const ModalDelete = ({ isVisible, handlerDeleteProduct, setIsVisible, productSelected }) => {
+const ModalDelete = ({ isVisible, handlerDeleteProduct, setIsVisible, producto }) => {
+ 
   return (
 
     <Modal
@@ -9,7 +10,7 @@ const ModalDelete = ({ isVisible, handlerDeleteProduct, setIsVisible, productSel
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalText}>Desea Borrar el Producto?</Text>
-          <Text style={styles.modalText}>{productSelected.title}</Text>
+          <Text style={styles.modalText}>{producto.title}</Text>
           <Button title="si" onPress={() => handlerDeleteProduct()} />
           <Button title="No" onPress={() => setIsVisible(false)} />
         </View>
