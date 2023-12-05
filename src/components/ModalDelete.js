@@ -6,6 +6,8 @@ const ModalDelete = ({ isVisible, handlerDeleteProduct, setIsVisible, producto }
 
     <Modal
       visible={isVisible}
+      transparent={true}
+
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
@@ -21,19 +23,24 @@ const ModalDelete = ({ isVisible, handlerDeleteProduct, setIsVisible, producto }
 const styles = StyleSheet.create(
   {
     modalContainer: {
+      
       flex: 1,
       alignItems: "center",
       justifyContent: "center",
+      backgroundColor:"rgba(255,255,255,0.8)"
     },
     modalContent:{
       width: "80%",
       borderWidth: 2,
       padding: 10,
-      gap: 10
+      gap: 10,
+      backgroundColor:"red",
+      
     },
     modalText:{
       textAlign: "center",
-    }
+    },
+
   }
 )
 export default ModalDelete
