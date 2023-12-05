@@ -1,8 +1,9 @@
 import { useState } from "react"
-import { StyleSheet, Text, View, TextInput, Button, Image, FlatList, Modal } from "react-native"
+import { StyleSheet, Text, View,  Button,  FlatList } from "react-native"
 import uuid from 'react-native-uuid';
 import ModalDelete from "./src/components/ModalDelete";
 import AddProduct from "./src/components/AddProduct";
+import ListProducts from "./src/components/ListProducts";
 //import { styles } from "./styleApp"
 const App = () => {
 
@@ -42,26 +43,14 @@ const App = () => {
       newPriceProduct = {newPriceProduct}
       handlerAddProduct = {handlerAddProduct}
       />
-      <View style={styles.listContainer}>
-        <FlatList
-          data={products}
-          keyExtractor={elemento => elemento.id}
-          renderItem={({ item }) =>
-            <View style={styles.cardProduct}>
-              <Text style={styles.cardTitle}>{item.title}</Text>
-              <Text>S/.{item.price}</Text>
-              <Button title="DEL" onPress={()=>handlerDeleteModal(item)}/>
-            </View>}
-        />
-      </View>
+      
       <ModalDelete 
         producto = {productSelected} 
         isVisible = {isVisible}  
         handlerDeleteProduct = {handlerDeleteProduct} 
         setIsVisible = {setIsVisible}
       />
-
-
+<ListProducts handlerDeleteModal={handlerDeleteModal} products={products}/>
     </View>
   )
 }
@@ -74,18 +63,7 @@ const styles = StyleSheet.create(
       marginTop: 80,
     },
     
-    listContainer: {
-      width: "100%"
-    },
-    cardProduct: {
-      flexDirection: "row",
-      padding: 10,
-      margin: 10,
-      justifyContent: "space-evenly",
-      alignItems: "center",
-      borderWidth: 4,
-      borderRadius: 8,
-    },
+    
     image: {
       alignSelf: "center",
       width: 200,
