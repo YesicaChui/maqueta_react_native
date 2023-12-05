@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { StyleSheet, Text, View, TextInput, Button, Image, FlatList, Modal } from "react-native"
 import uuid from 'react-native-uuid';
+import ModalDelete from "./src/components/ModalDelete";
 //import { styles } from "./styleApp"
 const App = () => {
 
@@ -57,13 +58,7 @@ const App = () => {
             </View>}
         />
       </View>
-      <Modal
-        visible={isVisible}
-      >
-        <Text >Desea Borrar</Text>
-        <Button title="si" onPress={()=>handlerDeleteProduct()}/>
-        <Button title="No" onPress={()=>setIsVisible(false)}/>
-      </Modal>
+      <ModalDelete productSelected = {productSelected} isVisible = {isVisible}  handlerDeleteProduct = {handlerDeleteProduct} setIsVisible = {setIsVisible}/>
 
     </View>
   )
